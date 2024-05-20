@@ -1,6 +1,24 @@
 
+module Game_Check
+  def game_check
+    winning_array = [[],[],[],[],[],[],[],[]]
+    if @game_board.flatten.count("X") >= 3 || @game_board.flatten.count("O") >= 3
+      if @game_board.any? { |element| element.all?("X")}
+        puts "Congrats you won #{@player_1}"
+      elsif @game_board.any? { |element| element.all?("O")}
+        puts "Congrats you won #{@player_2}"
+      elsif @game_board.all? { |element| element[0] }
+        
+      end
+    end
+  end
+
+end
+
 
 class Game
+
+  include Game_Check
   @@games_played = 0
   @@player_1_wins = 0
   @@player_2_wins = 0
@@ -28,7 +46,9 @@ class Game
     puts print @game_board_row_3
     puts "Your move #{self.starting_Player}!" 
     puts "Choose spot 1-9 on the board."
+    @game_board.permutation(3) { |x| p x.permutation(3){ |x| p x}}
     game_move(gets.chomp,@starting_Player)
+    
   end
   protected
   
@@ -65,16 +85,13 @@ class Game
       puts print @game_board_row_1
       puts print @game_board_row_2
       puts print @game_board_row_3
-      puts "Great move #{@active_player}, alright #{@inactive_player} its your turn."
+      puts "Great move #{@active_player}, alright #{@inactive_player} its your turn." 
       game_move(gets.chomp, @inactive_player)
     end
+    game_check() 
   end
 
 
-
-  def game_check(@gameboard)
-    
-  end
 end
 
 class Players
